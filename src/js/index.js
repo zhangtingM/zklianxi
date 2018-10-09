@@ -1,22 +1,21 @@
 $(function() {
-    new BScroll('.wrap');
+    var wrap = new BScroll('.wrap', {
+        click: true
+    });
     $.ajax({
         url: '../data/data.json',
-        dataType: 'json',
+        // dataType: 'json',
         success: function(res) {
-                console.log(res)
-                if (res.code === 1) {
-                    render(res.data)
-                }
-            }
-            //28:30
+            render(res.data)
+        }
+
     })
 
     function render(data) {
         var obj = {};
         data.forEach(function(item) {
             var first = item.Spelling.substr(0, 1);
-            if (obj[first]) {
+            if (!obj[first]) {
                 obj[first] = {
                     title: first,
                     list: []
@@ -34,6 +33,7 @@ $(function() {
             return a.title.charCodeAt(0) - b.title.charCodeAt(0)
         })
         var str = '';
+        var navStr = '';
         arr.forEach(function(item) {
             str += ` <li>
                 <h2>${item.title}</h2>
@@ -41,9 +41,19 @@ $(function() {
             item.list.forEach(function(v) {
                 str += `<li>${v.Name}</li>`
             })
-            str += ` </ol></li>`
+            str += ` </ol></li>`;
+            navStr += `<li>${item.title}</li>`
         });
         $('.list').append(str)
-
+        $('.nav-list').append(navStr)
     }
+
+    $('.nav-list').on('click', 'li', function() {
+        // alert(888)
+        var index = $(this).index();
+        // console.log(index)
+
+        wrap.scrollToElement($('.list>li').eq(index)[0]);
+        // console.log($('.wrap'))
+    })
 })

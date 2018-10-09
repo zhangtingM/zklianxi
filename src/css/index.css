@@ -36,3 +36,18 @@ body {
     height: 44px;
     border-top: 1px solid #000;
 }
+
+.nav-list {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    width: 30px;
+    transform: translate3d(0, -50%, 0);
+    background: gray;
+    z-index: 99;
+}
+
+.nav-list li {
+    text-align: center;
+    line-height: 30px
+}
